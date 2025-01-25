@@ -85,5 +85,7 @@ def render_sorting_tables():
 render_global_editable_section()
 render_sorting_tables()
 
-# Save updated data to JSON
-save_data(categories)
+if st.button("Save"):
+    # Save updated data to JSON
+    save_data(categories)
+    st.success("Data saved successfully!")
