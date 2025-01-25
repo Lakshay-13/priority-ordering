@@ -1,3 +1,2 @@
-json
 streamlit
 streamlit-sortables
