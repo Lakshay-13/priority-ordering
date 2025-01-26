@@ -12,11 +12,11 @@ def load_data():
         with open(DATA_FILE, "r") as file:
             return json.load(file)
     return {
-        "Need": ["Pavlos' Job", "Education Business", "E Consulting", "I Consulting"],
-        "Time": ["Pavlos' Job", "Education Business", "E Consulting", "I Consulting"],
-        "Skill": ["Pavlos' Job", "Education Business", "E Consulting", "I Consulting"],
-        "Worth": ["Pavlos' Job", "Education Business", "E Consulting", "I Consulting"],
-        "Deadline": ["Pavlos' Job", "Education Business", "E Consulting", "I Consulting"]
+        "Need": ["Task 1", "Task 2", "Task 3", "Task 4"],
+        "Time": ["Task 1", "Task 2", "Task 3", "Task 4"],
+        "Skill": ["Task 1", "Task 2", "Task 3", "Task 4"],
+        "Worth": ["Task 1", "Task 2", "Task 3", "Task 4"],
+        "Deadline": ["Task 1", "Task 2", "Task 3", "Task 4"]
     }
 
 # Save data to JSON file
@@ -31,9 +31,6 @@ categories = load_data()
 st.set_page_config(page_title="Priority Manager", layout="wide")
 
 # Initialize session state for category order
-if "global_order" not in st.session_state:
-    st.session_state["global_order"] = categories["Need"]
-
 for category, blocks in categories.items():
     if f"{category}_order" not in st.session_state:
         st.session_state[f"{category}_order"] = blocks
@@ -41,29 +38,6 @@ for category, blocks in categories.items():
 # Title
 st.title("Priority Manager")
 st.write("Drag and drop the blocks below to reorder your priorities for each category.")
-
-# Function to render a single global editable section
-def render_global_editable_section():
-    with st.expander("Edit Items Globally"):
-        items = st.session_state["global_order"]
-        edited_items = []
-
-        # Display items with edit and delete options
-        for i, item in enumerate(items):
-            cols = st.columns([8, 1, 1])
-            edited_item = cols[0].text_input(f"Item {i+1}", item, key=f"global_item_{i}")
-            if cols[1].button("➖", key=f"remove_global_{i}"):
-                continue  # Skip adding this item
-            edited_items.append(edited_item)
-
-        # Add new item option
-        if st.button("➕ Add item", key="add_global"):
-            edited_items.append("New Item")
-
-        # Update session state and propagate to all categories
-        st.session_state["global_order"] = edited_items
-        for category in categories.keys():
-            st.session_state[f"{category}_order"] = edited_items
 
 # Render sorting tables in a grid
 def render_sorting_tables():
@@ -81,8 +55,7 @@ def render_sorting_tables():
             st.session_state[f"{category}_order"] = new_order
             categories[category] = new_order
 
-# Render global editable section and sorting tables
-render_global_editable_section()
+# Render sorting tables
 render_sorting_tables()
 
 # Save updated data to JSON
