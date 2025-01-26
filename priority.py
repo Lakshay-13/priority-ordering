@@ -12,11 +12,11 @@ def load_data():
         with open(DATA_FILE, "r") as file:
             return json.load(file)
     return {
-        "Need": ["Task 1", "Task 2", "Task 3", "Task 4"],
-        "Time": ["Task 1", "Task 2", "Task 3", "Task 4"],
-        "Skill": ["Task 1", "Task 2", "Task 3", "Task 4"],
-        "Worth": ["Task 1", "Task 2", "Task 3", "Task 4"],
-        "Deadline": ["Task 1", "Task 2", "Task 3", "Task 4"]
+        "Need": ["Pavlos' Job", "Education Business", "E Consulting", "I Consulting"],
+        "Time": ["Pavlos' Job", "Education Business", "E Consulting", "I Consulting"],
+        "Skill": ["Pavlos' Job", "Education Business", "E Consulting", "I Consulting"],
+        "Worth": ["Pavlos' Job", "Education Business", "E Consulting", "I Consulting"],
+        "Deadline": ["Pavlos' Job", "Education Business", "E Consulting", "I Consulting"]
     }
 
 # Save data to JSON file
@@ -85,7 +85,13 @@ def render_sorting_tables():
 render_global_editable_section()
 render_sorting_tables()
 
-if st.button("Save"):
-    # Save updated data to JSON
+# Save updated data to JSON
+if st.button("Save Changes", key="save_button"):
     save_data(categories)
-    st.success("Data saved successfully!")
+    st.success("Changes saved successfully!", icon="✅")
+
+# Center the save button
+st.markdown(
+    "<style>.stButton button { display: block; margin: 0 auto; }</style>",
+    unsafe_allow_html=True
+)
